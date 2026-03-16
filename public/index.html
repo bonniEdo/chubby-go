@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chubby Go | 運動會讓你進化成別的生物</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-layer bg-grid"></div>
+    <div class="bg-layer glow glow-a"></div>
+    <div class="bg-layer glow glow-b"></div>
+    <div class="bg-layer glow glow-c"></div>
+
+    <main class="page">
+      <section class="hero reveal">
+        <p class="eyebrow">DEVICE-TO-CREATURE EVOLUTION</p>
+        <h1>
+          你每一次運動
+          <span>都會把自己跑成另一種生物</span>
+        </h1>
+        <p class="hero-copy">
+          當手錶或手機同步到步數、燃脂和活動分鐘，舞台上的超肥胖斑馬就會開始奔跑，
+          一邊甩掉脂肪塊，一邊脫掉外殼，最後露出全新的物種。
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-main" id="boostButton">模擬同步爆衝</button>
+          <button class="btn btn-ghost" id="finishButton">直接看最終進化</button>
+        </div>
+        <div class="hero-badges">
+          <span>Apple Watch / Google Fit 可接</span>
+          <span>跑越多 掉越多</span>
+          <span>蛻變生物可收藏</span>
+        </div>
+      </section>
+
+      <section class="experience reveal">
+        <div class="control-panel">
+          <div class="panel-head">
+            <p class="panel-kicker">SYNC PANEL</p>
+            <h2>用運動資料推動畫面演出</h2>
+            <p>
+              這一版先做互動原型。之後我們可以把這裡接到 Apple Health、Google Fit
+              或穿戴裝置 API。
+            </p>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <span>步數</span>
+              <strong id="stepsValue">6200</strong>
+              <small>今天已同步</small>
+            </article>
+            <article class="metric-card">
+              <span>活動分鐘</span>
+              <strong id="minutesValue">34</strong>
+              <small>心率帶動燃燒</small>
+            </article>
+            <article class="metric-card">
+              <span>燃燒熱量</span>
+              <strong id="caloriesValue">420</strong>
+              <small>脂肪塊掉落速度</small>
+            </article>
+          </div>
+
+          <div class="slider-group">
+            <label for="stepsRange">步數輸入</label>
+            <input id="stepsRange" type="range" min="0" max="20000" value="6200" step="100" />
+          </div>
+          <div class="slider-group">
+            <label for="minutesRange">活動分鐘</label>
+            <input id="minutesRange" type="range" min="0" max="140" value="34" step="1" />
+          </div>
+          <div class="slider-group">
+            <label for="caloriesRange">運動消耗熱量</label>
+            <input id="caloriesRange" type="range" min="0" max="1200" value="420" step="10" />
+          </div>
+
+          <div class="stage-summary">
+            <div>
+              <span class="summary-label">目前形態</span>
+              <strong id="stageName">超重斑馬</strong>
+            </div>
+            <div>
+              <span class="summary-label">演出狀態</span>
+              <strong id="stageText">剛起跑，脂肪還黏在身上</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="arena">
+          <div class="arena-top">
+            <div>
+              <p class="panel-kicker">MUTATION TRACK</p>
+              <h2>跑步中的外殼剝離秀</h2>
+            </div>
+            <div class="evolution-meter">
+              <span>進化進度</span>
+              <strong id="progressValue">41%</strong>
+            </div>
+          </div>
+
+          <div class="progress-rail">
+            <div class="progress-fill" id="progressFill"></div>
+            <span class="milestone active">肥胖斑馬</span>
+            <span class="milestone" id="midMilestone">甩脂衝刺</span>
+            <span class="milestone" id="finalMilestone">鴨嘴獸覺醒</span>
+          </div>
+
+          <div class="scene" id="scene">
+            <div class="sun-orb"></div>
+            <div class="track-lines"></div>
+            <div class="fat-pit" id="fatPit"></div>
+
+            <div class="creature-wrap" id="creatureWrap">
+              <div class="speed-trail"></div>
+              <div class="creature" id="creature" data-stage="zebra">
+                <div class="platypus-core" id="platypusCore">
+                  <div class="platypus-head">
+                    <div class="platypus-eye"></div>
+                    <div class="platypus-bill"></div>
+                  </div>
+                  <div class="platypus-body"></div>
+                  <div class="platypus-tail"></div>
+                  <div class="platypus-leg platypus-leg-a"></div>
+                  <div class="platypus-leg platypus-leg-b"></div>
+                </div>
+
+                <div class="zebra-shell" id="zebraShell">
+                  <div class="zebra-head">
+                    <div class="ear ear-left"></div>
+                    <div class="ear ear-right"></div>
+                    <div class="eye"></div>
+                    <div class="muzzle"></div>
+                  </div>
+                  <div class="zebra-body">
+                    <div class="stripe stripe-a"></div>
+                    <div class="stripe stripe-b"></div>
+                    <div class="stripe stripe-c"></div>
+                    <div class="stripe stripe-d"></div>
+                    <div class="belly"></div>
+                    <div class="fat-lump lump-a"></div>
+                    <div class="fat-lump lump-b"></div>
+                    <div class="fat-lump lump-c"></div>
+                  </div>
+                  <div class="zebra-leg zebra-leg-a"></div>
+                  <div class="zebra-leg zebra-leg-b"></div>
+                  <div class="tail"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="unlock-row">
+            <article class="unlock-card active">
+              <span>Tier 01</span>
+              <strong>超重斑馬</strong>
+              <p>剛開始時胖到條紋都快撐開。</p>
+            </article>
+            <article class="unlock-card" id="unlockBurst">
+              <span>Tier 02</span>
+              <strong>裂殼斑馬</strong>
+              <p>跑量上來後，脂肪塊會一坨一坨掉落。</p>
+            </article>
+            <article class="unlock-card" id="unlockFinal">
+              <span>Tier 03</span>
+              <strong>鴨嘴獸</strong>
+              <p>斑馬外殼脫完，真正物種從裡面醒來。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
