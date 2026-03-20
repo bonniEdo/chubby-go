@@ -3,181 +3,388 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chubby Go | 運動會讓你進化成別的生物</title>
+    <title>Chubby Go</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="bg-layer bg-grid"></div>
-    <div class="bg-layer glow glow-a"></div>
-    <div class="bg-layer glow glow-b"></div>
-    <div class="bg-layer glow glow-c"></div>
+    <main class="app-shell">
 
-    <main class="page">
-      <section class="hero reveal">
-        <p class="eyebrow">DEVICE-TO-CREATURE EVOLUTION</p>
-        <h1>
-          你每一次運動
-          <span>都會把自己跑成另一種生物</span>
-        </h1>
-        <p class="hero-copy">
-          當手錶或手機同步到步數、燃脂和活動分鐘，舞台上的超肥胖斑馬就會開始奔跑，
-          一邊甩掉脂肪塊，一邊脫掉外殼，最後露出全新的物種。
-        </p>
-        <div class="hero-actions">
-          <button class="btn btn-main" id="boostButton">模擬同步爆衝</button>
-          <button class="btn btn-ghost" id="finishButton">直接看最終進化</button>
-        </div>
-        <div class="hero-badges">
-          <span>Apple Watch / Google Fit 可接</span>
-          <span>跑越多 掉越多</span>
-          <span>蛻變生物可收藏</span>
+      <!-- 1. SCENE CARD -->
+      <section class="scene-card">
+        <div class="scene" id="scene">
+          <div class="moon"></div>
+          <div class="track"></div>
+          <div class="fat-layer" id="fatLayer"></div>
+
+          <!-- Character SVG -->
+          <div class="char-wrap" id="charWrap">
+            <svg id="charSvg" class="char-svg" viewBox="0 0 320 380"
+                 xmlns="http://www.w3.org/2000/svg" aria-label="Chubby Go character" role="img">
+              <defs>
+                <clipPath id="clipLeft">
+                  <rect x="0" y="0" width="160" height="380"/>
+                </clipPath>
+                <clipPath id="clipRight">
+                  <rect x="160" y="0" width="160" height="380"/>
+                </clipPath>
+              </defs>
+
+              <!-- ─ STAGE 1: 超肥斑馬 in onesie (0–599 cal) ─ -->
+              <g id="stage1">
+                <!-- Shadow -->
+                <ellipse cx="160" cy="372" rx="100" ry="10" fill="rgba(0,0,0,0.22)"/>
+                <!-- Onesie body — very round -->
+                <ellipse cx="160" cy="248" rx="110" ry="100" fill="#F0A030"/>
+                <!-- Belly highlight -->
+                <ellipse cx="148" cy="255" rx="58" ry="52" fill="rgba(255,255,255,0.09)"/>
+                <!-- Left arm -->
+                <ellipse cx="55"  cy="228" rx="26" ry="42" fill="#F0A030" transform="rotate(-18,55,228)"/>
+                <!-- Right arm -->
+                <ellipse cx="265" cy="228" rx="26" ry="42" fill="#F0A030" transform="rotate(18,265,228)"/>
+                <!-- Legs -->
+                <rect x="114" y="332" width="38" height="34" rx="10" fill="#F0A030"/>
+                <rect x="168" y="332" width="38" height="34" rx="10" fill="#F0A030"/>
+                <!-- Hooves -->
+                <ellipse cx="133" cy="368" rx="20" ry="9"  fill="#1a1a1a"/>
+                <ellipse cx="187" cy="368" rx="20" ry="9"  fill="#1a1a1a"/>
+                <!-- Hood (orange circle) -->
+                <circle  cx="160" cy="130" r="70"           fill="#F0A030"/>
+                <!-- Zebra face -->
+                <ellipse cx="160" cy="132" rx="56" ry="58" fill="#f0ebe0"/>
+                <!-- Stripes -->
+                <rect x="136" y="88"  width="10" height="42" rx="4" fill="#1a1a1a" transform="rotate(-8,141,109)"/>
+                <rect x="155" y="82"  width="10" height="44" rx="4" fill="#1a1a1a"/>
+                <rect x="176" y="88"  width="10" height="42" rx="4" fill="#1a1a1a" transform="rotate(8,181,109)"/>
+                <!-- Eyes -->
+                <circle cx="143" cy="148" r="9" fill="#1a1a1a"/>
+                <circle cx="177" cy="148" r="9" fill="#1a1a1a"/>
+                <circle cx="146" cy="145" r="3" fill="#fff"/>
+                <circle cx="180" cy="145" r="3" fill="#fff"/>
+                <!-- Snout -->
+                <ellipse cx="160" cy="168" rx="16" ry="9"  fill="#d4c0aa"/>
+                <circle  cx="155" cy="167" r="3"            fill="#8a6a5a"/>
+                <circle  cx="165" cy="167" r="3"            fill="#8a6a5a"/>
+                <!-- Ears -->
+                <ellipse cx="118" cy="76"  rx="12" ry="18" fill="#F0A030" transform="rotate(-20,118,76)"/>
+                <ellipse cx="202" cy="76"  rx="12" ry="18" fill="#F0A030" transform="rotate(20,202,76)"/>
+                <ellipse cx="118" cy="74"  rx="6"  ry="11" fill="#f0ebe0" transform="rotate(-20,118,74)"/>
+                <ellipse cx="202" cy="74"  rx="6"  ry="11" fill="#f0ebe0" transform="rotate(20,202,74)"/>
+                <!-- Zipper line -->
+                <line x1="160" y1="172" x2="160" y2="332" stroke="#c07010" stroke-width="2" stroke-dasharray="6,4"/>
+                <!-- Zipper pull -->
+                <rect x="154" y="188" width="12" height="9" rx="2" fill="#ccc" stroke="#888" stroke-width="1"/>
+              </g>
+
+              <!-- ─ STAGE 2: 中型斑馬 in onesie (600–1199 cal) ─ -->
+              <g id="stage2" style="display:none">
+                <ellipse cx="160" cy="372" rx="84"  ry="9"  fill="rgba(0,0,0,0.2)"/>
+                <ellipse cx="160" cy="250" rx="90"  ry="86" fill="#F0A030"/>
+                <ellipse cx="149" cy="257" rx="46"  ry="44" fill="rgba(255,255,255,0.09)"/>
+                <ellipse cx="64"  cy="232" rx="22"  ry="36" fill="#F0A030" transform="rotate(-15,64,232)"/>
+                <ellipse cx="256" cy="232" rx="22"  ry="36" fill="#F0A030" transform="rotate(15,256,232)"/>
+                <rect x="118" y="322" width="34" height="36" rx="9"  fill="#F0A030"/>
+                <rect x="168" y="322" width="34" height="36" rx="9"  fill="#F0A030"/>
+                <ellipse cx="135" cy="360" rx="18"  ry="8"  fill="#1a1a1a"/>
+                <ellipse cx="185" cy="360" rx="18"  ry="8"  fill="#1a1a1a"/>
+                <!-- Hood + face (same for stages 1-4) -->
+                <circle  cx="160" cy="130" r="70"           fill="#F0A030"/>
+                <ellipse cx="160" cy="132" rx="56" ry="58"  fill="#f0ebe0"/>
+                <rect x="136" y="88"  width="10" height="42" rx="4" fill="#1a1a1a" transform="rotate(-8,141,109)"/>
+                <rect x="155" y="82"  width="10" height="44" rx="4" fill="#1a1a1a"/>
+                <rect x="176" y="88"  width="10" height="42" rx="4" fill="#1a1a1a" transform="rotate(8,181,109)"/>
+                <circle cx="143" cy="148" r="9" fill="#1a1a1a"/>
+                <circle cx="177" cy="148" r="9" fill="#1a1a1a"/>
+                <circle cx="146" cy="145" r="3" fill="#fff"/>
+                <circle cx="180" cy="145" r="3" fill="#fff"/>
+                <ellipse cx="160" cy="168" rx="16" ry="9"  fill="#d4c0aa"/>
+                <circle  cx="155" cy="167" r="3"            fill="#8a6a5a"/>
+                <circle  cx="165" cy="167" r="3"            fill="#8a6a5a"/>
+                <ellipse cx="118" cy="76"  rx="12" ry="18" fill="#F0A030" transform="rotate(-20,118,76)"/>
+                <ellipse cx="202" cy="76"  rx="12" ry="18" fill="#F0A030" transform="rotate(20,202,76)"/>
+                <ellipse cx="118" cy="74"  rx="6"  ry="11" fill="#f0ebe0" transform="rotate(-20,118,74)"/>
+                <ellipse cx="202" cy="74"  rx="6"  ry="11" fill="#f0ebe0" transform="rotate(20,202,74)"/>
+                <line x1="160" y1="172" x2="160" y2="322" stroke="#c07010" stroke-width="2" stroke-dasharray="6,4"/>
+                <rect x="154" y="188" width="12" height="9" rx="2" fill="#ccc" stroke="#888" stroke-width="1"/>
+              </g>
+
+              <!-- ─ STAGE 3: 瘦斑馬 in baggy onesie (1200–1799 cal) ─ -->
+              <g id="stage3" style="display:none">
+                <ellipse cx="160" cy="372" rx="66"  ry="8"  fill="rgba(0,0,0,0.18)"/>
+                <ellipse cx="160" cy="250" rx="70"  ry="80" fill="#F0A030"/>
+                <!-- Baggy side folds -->
+                <ellipse cx="95"  cy="254" rx="20"  ry="36" fill="#e89020" transform="rotate(-10,95,254)"/>
+                <ellipse cx="225" cy="254" rx="20"  ry="36" fill="#e89020" transform="rotate(10,225,254)"/>
+                <ellipse cx="148" cy="260" rx="36"  ry="42" fill="rgba(255,255,255,0.09)"/>
+                <ellipse cx="72"  cy="240" rx="18"  ry="30" fill="#F0A030" transform="rotate(-12,72,240)"/>
+                <ellipse cx="248" cy="240" rx="18"  ry="30" fill="#F0A030" transform="rotate(12,248,240)"/>
+                <rect x="124" y="316" width="30" height="40" rx="9"  fill="#F0A030"/>
+                <rect x="166" y="316" width="30" height="40" rx="9"  fill="#F0A030"/>
+                <ellipse cx="139" cy="358" rx="16"  ry="8"  fill="#1a1a1a"/>
+                <ellipse cx="181" cy="358" rx="16"  ry="8"  fill="#1a1a1a"/>
+                <!-- Hood + face -->
+                <circle  cx="160" cy="130" r="70"           fill="#F0A030"/>
+                <ellipse cx="160" cy="132" rx="56" ry="58"  fill="#f0ebe0"/>
+                <rect x="136" y="88"  width="10" height="42" rx="4" fill="#1a1a1a" transform="rotate(-8,141,109)"/>
+                <rect x="155" y="82"  width="10" height="44" rx="4" fill="#1a1a1a"/>
+                <rect x="176" y="88"  width="10" height="42" rx="4" fill="#1a1a1a" transform="rotate(8,181,109)"/>
+                <circle cx="143" cy="148" r="9" fill="#1a1a1a"/>
+                <circle cx="177" cy="148" r="9" fill="#1a1a1a"/>
+                <circle cx="146" cy="145" r="3" fill="#fff"/>
+                <circle cx="180" cy="145" r="3" fill="#fff"/>
+                <ellipse cx="160" cy="168" rx="16" ry="9"  fill="#d4c0aa"/>
+                <circle  cx="155" cy="167" r="3"            fill="#8a6a5a"/>
+                <circle  cx="165" cy="167" r="3"            fill="#8a6a5a"/>
+                <ellipse cx="118" cy="76"  rx="12" ry="18" fill="#F0A030" transform="rotate(-20,118,76)"/>
+                <ellipse cx="202" cy="76"  rx="12" ry="18" fill="#F0A030" transform="rotate(20,202,76)"/>
+                <ellipse cx="118" cy="74"  rx="6"  ry="11" fill="#f0ebe0" transform="rotate(-20,118,74)"/>
+                <ellipse cx="202" cy="74"  rx="6"  ry="11" fill="#f0ebe0" transform="rotate(20,202,74)"/>
+                <line x1="160" y1="172" x2="160" y2="316" stroke="#c07010" stroke-width="2" stroke-dasharray="6,4"/>
+                <rect x="154" y="188" width="12" height="9" rx="2" fill="#ccc" stroke="#888" stroke-width="1"/>
+              </g>
+
+              <!-- ─ STAGE 4: 拉鍊開啟 (1800–2399 cal) ─ -->
+              <g id="stage4" style="display:none">
+                <ellipse cx="160" cy="372" rx="66"  ry="8"  fill="rgba(0,0,0,0.18)"/>
+                <!-- Platypus body UNDERNEATH (revealed through zipper gap) -->
+                <ellipse cx="160" cy="252" rx="70"  ry="80" fill="#8B6348"/>
+                <ellipse cx="155" cy="265" rx="40"  ry="54" fill="#c8a882"/>
+                <!-- Legs behind onesie (platypus) -->
+                <rect x="124" y="316" width="30"  height="40" rx="9"  fill="#7A5438"/>
+                <rect x="166" y="316" width="30"  height="40" rx="9"  fill="#7A5438"/>
+                <ellipse cx="139" cy="358" rx="16" ry="8"   fill="#1a1a1a"/>
+                <ellipse cx="181" cy="358" rx="16" ry="8"   fill="#1a1a1a"/>
+                <!-- Duck bill (hidden until notch 2) -->
+                <g id="billReveal" opacity="0">
+                  <ellipse cx="112" cy="172" rx="40" ry="14" fill="#E8A020" transform="rotate(-8,112,172)"/>
+                  <ellipse cx="112" cy="170" rx="38" ry="7"  fill="#F0B840" transform="rotate(-8,112,170)"/>
+                </g>
+                <!-- LEFT half of onesie (clipped to x 0-160) -->
+                <g id="onesieHalfLeft" clip-path="url(#clipLeft)">
+                  <ellipse cx="160" cy="250" rx="70" ry="80" fill="#F0A030"/>
+                  <ellipse cx="95"  cy="254" rx="20" ry="36" fill="#e89020" transform="rotate(-10,95,254)"/>
+                  <ellipse cx="72"  cy="240" rx="18" ry="30" fill="#F0A030" transform="rotate(-12,72,240)"/>
+                  <rect x="124" y="316" width="30" height="40" rx="9" fill="#F0A030"/>
+                </g>
+                <!-- RIGHT half of onesie (clipped to x 160-320) -->
+                <g id="onesieHalfRight" clip-path="url(#clipRight)">
+                  <ellipse cx="160" cy="250" rx="70" ry="80" fill="#F0A030"/>
+                  <ellipse cx="225" cy="254" rx="20" ry="36" fill="#e89020" transform="rotate(10,225,254)"/>
+                  <ellipse cx="248" cy="240" rx="18" ry="30" fill="#F0A030" transform="rotate(12,248,240)"/>
+                  <rect x="166" y="316" width="30" height="40" rx="9" fill="#F0A030"/>
+                </g>
+                <!-- Hood + zebra face on top of everything -->
+                <circle  cx="160" cy="130" r="70"           fill="#F0A030"/>
+                <ellipse cx="160" cy="132" rx="56" ry="58"  fill="#f0ebe0"/>
+                <rect x="136" y="88"  width="10" height="42" rx="4" fill="#1a1a1a" transform="rotate(-8,141,109)"/>
+                <rect x="155" y="82"  width="10" height="44" rx="4" fill="#1a1a1a"/>
+                <rect x="176" y="88"  width="10" height="42" rx="4" fill="#1a1a1a" transform="rotate(8,181,109)"/>
+                <circle cx="143" cy="148" r="9" fill="#1a1a1a"/>
+                <circle cx="177" cy="148" r="9" fill="#1a1a1a"/>
+                <circle cx="146" cy="145" r="3" fill="#fff"/>
+                <circle cx="180" cy="145" r="3" fill="#fff"/>
+                <ellipse cx="160" cy="168" rx="16" ry="9"  fill="#d4c0aa"/>
+                <circle  cx="155" cy="167" r="3"            fill="#8a6a5a"/>
+                <circle  cx="165" cy="167" r="3"            fill="#8a6a5a"/>
+                <ellipse cx="118" cy="76"  rx="12" ry="18" fill="#F0A030" transform="rotate(-20,118,76)"/>
+                <ellipse cx="202" cy="76"  rx="12" ry="18" fill="#F0A030" transform="rotate(20,202,76)"/>
+                <ellipse cx="118" cy="74"  rx="6"  ry="11" fill="#f0ebe0" transform="rotate(-20,118,74)"/>
+                <ellipse cx="202" cy="74"  rx="6"  ry="11" fill="#f0ebe0" transform="rotate(20,202,74)"/>
+                <!-- Zipper seam -->
+                <line x1="160" y1="172" x2="160" y2="316" stroke="#c07010" stroke-width="2" stroke-dasharray="6,4" opacity="0.6"/>
+              </g>
+
+              <!-- ─ STAGE 5: 完整鴨嘴獸 (2400+ cal) ─ -->
+              <g id="stage5" style="display:none">
+                <ellipse cx="160" cy="372" rx="72"  ry="9"  fill="rgba(0,0,0,0.2)"/>
+                <!-- Beaver tail (right side) -->
+                <ellipse cx="250" cy="270" rx="38"  ry="16" fill="#6B4A32" transform="rotate(-12,250,270)"/>
+                <ellipse cx="250" cy="270" rx="32"  ry="12" fill="#7B5842" transform="rotate(-12,250,270)"/>
+                <!-- Body -->
+                <ellipse cx="160" cy="252" rx="78"  ry="82" fill="#8B6348"/>
+                <!-- Belly -->
+                <ellipse cx="155" cy="265" rx="44"  ry="55" fill="#c8a882"/>
+                <!-- Body highlight -->
+                <ellipse cx="138" cy="224" rx="22"  ry="14" fill="rgba(255,255,255,0.10)" transform="rotate(-15,138,224)"/>
+                <!-- Arms -->
+                <ellipse cx="80"  cy="258" rx="28"  ry="16" fill="#7A5438" transform="rotate(-20,80,258)"/>
+                <ellipse cx="240" cy="258" rx="28"  ry="16" fill="#7A5438" transform="rotate(20,240,258)"/>
+                <!-- Legs -->
+                <rect x="124" y="318" width="28" height="24" rx="8" fill="#7A5438"/>
+                <rect x="168" y="318" width="28" height="24" rx="8" fill="#7A5438"/>
+                <!-- Webbed feet -->
+                <path d="M106,332 Q116,348 126,336 Q132,350 140,338 Q144,352 152,340" stroke="#c8a050" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <path d="M168,332 Q178,348 188,336 Q194,350 202,338 Q206,352 214,340" stroke="#c8a050" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <!-- Duck bill (pointing left) -->
+                <ellipse cx="114" cy="172" rx="48"  ry="16" fill="#E8A020" transform="rotate(-8,114,172)"/>
+                <ellipse cx="114" cy="170" rx="46"  ry="8"  fill="#F0B840" transform="rotate(-8,114,170)"/>
+                <!-- Nostril slits -->
+                <ellipse cx="84"  cy="165" rx="4"   ry="2"  fill="#c07810" transform="rotate(-8,84,165)"/>
+                <ellipse cx="84"  cy="172" rx="4"   ry="2"  fill="#c07810" transform="rotate(-8,84,172)"/>
+                <!-- Head -->
+                <circle  cx="160" cy="126" r="60"            fill="#8B6348"/>
+                <!-- Small round ears -->
+                <circle  cx="116" cy="82"  r="14"            fill="#7A5438"/>
+                <circle  cx="204" cy="82"  r="14"            fill="#7A5438"/>
+                <circle  cx="116" cy="82"  r="7"             fill="#6B4A32"/>
+                <circle  cx="204" cy="82"  r="7"             fill="#6B4A32"/>
+                <!-- Eyes -->
+                <circle  cx="140" cy="138" r="10"            fill="#1a1a1a"/>
+                <circle  cx="180" cy="138" r="10"            fill="#1a1a1a"/>
+                <circle  cx="143" cy="135" r="3.5"           fill="#fff"/>
+                <circle  cx="183" cy="135" r="3.5"           fill="#fff"/>
+              </g>
+
+            </svg>
+          </div>
+
+          <!-- Fat pile (bottom right) -->
+          <div class="pile-zone">
+            <span class="pile-count" id="pileCount">0 kcal</span>
+            <div class="fat-pile" id="fatPile">
+              <span class="blob blob-a"></span>
+              <span class="blob blob-b"></span>
+              <span class="blob blob-c"></span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="experience reveal">
-        <div class="control-panel">
-          <div class="panel-head">
-            <p class="panel-kicker">SYNC PANEL</p>
-            <h2>用運動資料推動畫面演出</h2>
-            <p>
-              這一版先做互動原型。之後我們可以把這裡接到 Apple Health、Google Fit
-              或穿戴裝置 API。
-            </p>
-          </div>
-
-          <div class="metric-grid">
-            <article class="metric-card">
-              <span>步數</span>
-              <strong id="stepsValue">6200</strong>
-              <small>今天已同步</small>
-            </article>
-            <article class="metric-card">
-              <span>活動分鐘</span>
-              <strong id="minutesValue">34</strong>
-              <small>心率帶動燃燒</small>
-            </article>
-            <article class="metric-card">
-              <span>燃燒熱量</span>
-              <strong id="caloriesValue">420</strong>
-              <small>脂肪塊掉落速度</small>
-            </article>
-          </div>
-
-          <div class="slider-group">
-            <label for="stepsRange">步數輸入</label>
-            <input id="stepsRange" type="range" min="0" max="20000" value="6200" step="100" />
-          </div>
-          <div class="slider-group">
-            <label for="minutesRange">活動分鐘</label>
-            <input id="minutesRange" type="range" min="0" max="140" value="34" step="1" />
-          </div>
-          <div class="slider-group">
-            <label for="caloriesRange">運動消耗熱量</label>
-            <input id="caloriesRange" type="range" min="0" max="1200" value="420" step="10" />
-          </div>
-
-          <div class="stage-summary">
-            <div>
-              <span class="summary-label">目前形態</span>
-              <strong id="stageName">超重斑馬</strong>
-            </div>
-            <div>
-              <span class="summary-label">演出狀態</span>
-              <strong id="stageText">剛起跑，脂肪還黏在身上</strong>
-            </div>
+      <!-- 2. PROGRESS CARD -->
+      <section class="progress-card">
+        <div class="stage-badge-row">
+          <span class="stage-badge" id="stageBadge">Stage 1</span>
+          <span class="stage-name"  id="stageName">超肥斑馬</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" id="progressBar" style="width:0%"></div>
+          <div class="zipper-marks" id="zipperMarks" style="display:none">
+            <span class="zipper-mark" style="left:33.3%"></span>
+            <span class="zipper-mark" style="left:66.6%"></span>
           </div>
         </div>
+        <div class="progress-label" id="progressLabel">0 / 600 kcal</div>
+      </section>
 
-        <div class="arena">
-          <div class="arena-top">
-            <div>
-              <p class="panel-kicker">MUTATION TRACK</p>
-              <h2>跑步中的外殼剝離秀</h2>
-            </div>
-            <div class="evolution-meter">
-              <span>進化進度</span>
-              <strong id="progressValue">41%</strong>
-            </div>
-          </div>
-
-          <div class="progress-rail">
-            <div class="progress-fill" id="progressFill"></div>
-            <span class="milestone active">肥胖斑馬</span>
-            <span class="milestone" id="midMilestone">甩脂衝刺</span>
-            <span class="milestone" id="finalMilestone">鴨嘴獸覺醒</span>
-          </div>
-
-          <div class="scene" id="scene">
-            <div class="sun-orb"></div>
-            <div class="track-lines"></div>
-            <div class="fat-pit" id="fatPit"></div>
-
-            <div class="creature-wrap" id="creatureWrap">
-              <div class="speed-trail"></div>
-              <div class="creature" id="creature" data-stage="zebra">
-                <div class="platypus-core" id="platypusCore">
-                  <div class="platypus-head">
-                    <div class="platypus-eye"></div>
-                    <div class="platypus-bill"></div>
-                  </div>
-                  <div class="platypus-body"></div>
-                  <div class="platypus-tail"></div>
-                  <div class="platypus-leg platypus-leg-a"></div>
-                  <div class="platypus-leg platypus-leg-b"></div>
-                </div>
-
-                <div class="zebra-shell" id="zebraShell">
-                  <div class="zebra-head">
-                    <div class="ear ear-left"></div>
-                    <div class="ear ear-right"></div>
-                    <div class="eye"></div>
-                    <div class="muzzle"></div>
-                  </div>
-                  <div class="zebra-body">
-                    <div class="stripe stripe-a"></div>
-                    <div class="stripe stripe-b"></div>
-                    <div class="stripe stripe-c"></div>
-                    <div class="stripe stripe-d"></div>
-                    <div class="belly"></div>
-                    <div class="fat-lump lump-a"></div>
-                    <div class="fat-lump lump-b"></div>
-                    <div class="fat-lump lump-c"></div>
-                  </div>
-                  <div class="zebra-leg zebra-leg-a"></div>
-                  <div class="zebra-leg zebra-leg-b"></div>
-                  <div class="tail"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="unlock-row">
-            <article class="unlock-card active">
-              <span>Tier 01</span>
-              <strong>超重斑馬</strong>
-              <p>剛開始時胖到條紋都快撐開。</p>
-            </article>
-            <article class="unlock-card" id="unlockBurst">
-              <span>Tier 02</span>
-              <strong>裂殼斑馬</strong>
-              <p>跑量上來後，脂肪塊會一坨一坨掉落。</p>
-            </article>
-            <article class="unlock-card" id="unlockFinal">
-              <span>Tier 03</span>
-              <strong>鴨嘴獸</strong>
-              <p>斑馬外殼脫完，真正物種從裡面醒來。</p>
-            </article>
-          </div>
+      <!-- 3. INVENTORY ROW -->
+      <section class="inventory-row">
+        <div class="inv-cell">
+          <span class="inv-icon">🫧</span>
+          <span class="inv-count" id="fatBitCount">0</span>
+          <span class="inv-label">脂肪粒</span>
+        </div>
+        <div class="inv-cell clickable" id="fatEggCell">
+          <span class="inv-icon">🥚</span>
+          <span class="inv-count" id="fatEggCount">0</span>
+          <span class="inv-label">脂肪蛋</span>
+        </div>
+        <div class="inv-cell clickable" id="collectionCell">
+          <span class="inv-icon">🦛</span>
+          <span class="inv-count" id="collectionCount">0</span>
+          <span class="inv-label">收藏</span>
         </div>
       </section>
+
+      <!-- 4. CONTROL CARD -->
+      <section class="control-card">
+        <label class="field">
+          <span>今天做什麼運動</span>
+          <select id="workoutType">
+            <option value="walk">走路 (3.6 kcal/min)</option>
+            <option value="run">跑步 (7.2 kcal/min)</option>
+            <option value="bike">騎車 (5.7 kcal/min)</option>
+            <option value="swim">游泳 (6.3 kcal/min)</option>
+            <option value="hiit">HIIT (9.3 kcal/min)</option>
+            <option value="gym">重訓 (5.1 kcal/min)</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>今天運動多久</span>
+          <div class="minutes-row">
+            <input id="minutesInput" type="range" min="0" max="180" value="30" step="5" />
+            <strong><span id="minutesValue">30</span> 分</strong>
+          </div>
+        </label>
+
+        <p class="cal-preview" id="calPreview">預計燃燒 108 kcal，賺取 2 粒脂肪粒</p>
+
+        <button class="sync-button" id="syncButton">同步今天運動</button>
+      </section>
+
     </main>
 
+    <!-- ── FAT EGG MODAL ── -->
+    <div class="modal-overlay" id="eggModal" style="display:none">
+      <div class="modal-box">
+        <h2 class="modal-title">✨ 脂肪蛋！</h2>
+        <div id="eggArea">
+          <svg id="eggSvg" viewBox="0 0 120 150" width="120" height="150">
+            <ellipse cx="60" cy="82" rx="46" ry="58" fill="#fff8e8" stroke="#e8d0a0" stroke-width="2"/>
+            <ellipse cx="50" cy="62" rx="14" ry="20" fill="rgba(255,255,255,0.3)" transform="rotate(-15,50,62)"/>
+            <g id="eggCracks" opacity="0">
+              <path d="M60,36 L52,56 L64,64 L50,82" stroke="#c8a060" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M60,36 L68,54 L58,62 L70,80" stroke="#c8a060" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div id="hippoArea" style="display:none">
+          <svg viewBox="0 0 160 140" width="160" height="140">
+            <!-- Fat Hippo -->
+            <ellipse cx="80" cy="95"  rx="55" ry="40" fill="#9b78b8"/>
+            <ellipse cx="80" cy="105" rx="34" ry="22" fill="#c8a8e0"/>
+            <circle  cx="80" cy="52"  r="36"           fill="#9b78b8"/>
+            <!-- Nostrils on top of head -->
+            <circle  cx="66" cy="38"  r="9"            fill="#7a58a0"/>
+            <circle  cx="94" cy="38"  r="9"            fill="#7a58a0"/>
+            <circle  cx="66" cy="38"  r="5"            fill="#5a3880"/>
+            <circle  cx="94" cy="38"  r="5"            fill="#5a3880"/>
+            <!-- Eyes -->
+            <circle  cx="66" cy="58"  r="7"            fill="#1a1a1a"/>
+            <circle  cx="94" cy="58"  r="7"            fill="#1a1a1a"/>
+            <circle  cx="68" cy="55"  r="2.5"          fill="#fff"/>
+            <circle  cx="96" cy="55"  r="2.5"          fill="#fff"/>
+            <!-- Big smile -->
+            <path d="M52,76 Q80,96 108,76" stroke="#7a58a0" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- Tiny ears -->
+            <ellipse cx="48" cy="32"  rx="10" ry="14" fill="#8a68a8" transform="rotate(-15,48,32)"/>
+            <ellipse cx="112" cy="32" rx="10" ry="14" fill="#8a68a8" transform="rotate(15,112,32)"/>
+            <ellipse cx="48" cy="32"  rx="5"  ry="8"  fill="#c8a8e0" transform="rotate(-15,48,32)"/>
+            <ellipse cx="112" cy="32" rx="5"  ry="8"  fill="#c8a8e0" transform="rotate(15,112,32)"/>
+            <!-- Tiny legs -->
+            <rect x="48"  y="125" width="22" height="14" rx="6" fill="#8a68a8"/>
+            <rect x="90"  y="125" width="22" height="14" rx="6" fill="#8a68a8"/>
+            <!-- Label -->
+            <text x="80" y="16" text-anchor="middle" font-size="13" fill="#f6f2e8" font-family="'Noto Sans TC',sans-serif" font-weight="700">肥河馬！</text>
+          </svg>
+        </div>
+        <div class="modal-actions">
+          <button class="modal-btn-open"  id="openEggBtn">打開！</button>
+          <button class="modal-btn-close" id="closeEggBtn">先不要</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── COLLECTION MODAL ── -->
+    <div class="modal-overlay" id="collectionModal" style="display:none">
+      <div class="modal-box">
+        <h2 class="modal-title">我的收藏</h2>
+        <div class="collection-grid" id="collectionGrid"></div>
+        <div class="modal-actions" style="justify-content:center">
+          <button class="modal-btn-close" id="closeCollectionBtn">關閉</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flash overlay for stage transition -->
+    <div class="flash-overlay" id="flashOverlay"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
